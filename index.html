@@ -117,7 +117,7 @@ footer a{color:#1565C0}
   <section class="section" id="s3">
     <h2 class="section-title">三、违规店铺数量<span>堆叠图：有交易店铺 + 无交易店铺</span></h2>
     <div class="card">
-      <div class="chart-wrap" style="height:340px"><canvas id="c3"></canvas></div>
+      <div class="chart-wrap" style="height:380px"><canvas id="c3"></canvas></div>
     </div>
   </section>
 
@@ -410,56 +410,96 @@ new Chart(document.getElementById('c2'), {
 });
 
 // ── Chart 3: 违规店铺数量（堆叠横向柱状图）──
-new Chart(document.getElementById('c3'), {
-  type: 'bar',
-  data: {
-    labels: ['京东','拼多多','饿了么/淘宝闪购','美团','淘宝','抖音','天猫'],
-    datasets: [
-      {
-        label: '有交易店铺',
-        data: [4858, 9463, 5223, 6918, 881, 454, 256],
-        backgroundColor: '#D32F2F',
-        borderRadius: 0
-      },
-      {
-        label: '无交易店铺',
-        data: [38332, 0, 1106, 113, 0, 0, 0],
-        backgroundColor: '#90CAF9',
-        borderRadius: 0
-      }
-    ]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {position: 'top'},
-      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.x.toLocaleString() + ' 家'}},
-      datalabels: {
-        display: ctx => ctx.dataset.data[ctx.dataIndex] > 0,
-        anchor: 'center',
-        align: 'center',
-        formatter: v => v.toLocaleString(),
-        font: {size: 11, weight: 'bold'},
-        color: '#fff'
-      }
+(function(){
+  const labels   = ['京东','拼多多','饿了么/淘宝闪购','美团','淘宝','抖音','天猫'];
+  const hasTrade = [4858, 9463, 5223, 6918, 881, 454, 256];
+  const noTrade  = [38332, 0, 1106, 113, 0, 0, 0];
+  const totals   = labels.map((_, i) => hasTrade[i] + noTrade[i]);
+
+  new Chart(document.getElementById('c3'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '有交易店铺',
+          data: hasTrade,
+          backgroundColor: '#D32F2F',
+          borderRadius: 0,
+          datalabels: {
+            display: ctx => hasTrade[ctx.dataIndex] > 300,
+            anchor: 'center',
+            align: 'center',
+            formatter: v => v.toLocaleString(),
+            font: {size: 11, weight: 'bold'},
+            color: '#fff'
+          }
+        },
+        {
+          label: '无交易店铺',
+          data: noTrade,
+          backgroundColor: '#90CAF9',
+          borderRadius: 0,
+          datalabels: {
+            display: ctx => noTrade[ctx.dataIndex] > 0,
+            anchor: 'center',
+            align: 'center',
+            formatter: v => v.toLocaleString(),
+            font: {size: 11, weight: 'bold'},
+            color: '#1565C0'
+          }
+        },
+        // 透明占位 dataset，用于在柱子末端显示合计
+        {
+          label: '合计',
+          data: totals.map(() => 0),
+          backgroundColor: 'transparent',
+          datalabels: {
+            display: true,
+            anchor: 'end',
+            align: 'end',
+            formatter: (_, ctx) => '合计 ' + totals[ctx.dataIndex].toLocaleString() + ' 家',
+            font: {size: 11, weight: 'bold'},
+            color: '#212121',
+            offset: 4
+          }
+        }
+      ]
     },
-    scales: {
-      x: {
-        stacked: true,
-        beginAtZero: true,
-        title: {display: true, text: '家'},
-        grid: {color: '#F0F0F0'}
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            filter: item => item.text !== '合计'
+          }
+        },
+        tooltip: {
+          filter: item => item.dataset.label !== '合计',
+          callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.x.toLocaleString() + ' 家'}
+        },
+        datalabels: {}
       },
-      y: {
-        stacked: true,
-        ticks: {font: {size: 13, weight: 'bold'}},
-        grid: {display: false}
+      scales: {
+        x: {
+          stacked: true,
+          beginAtZero: true,
+          max: 52000,
+          title: {display: true, text: '家'},
+          grid: {color: '#F0F0F0'}
+        },
+        y: {
+          stacked: true,
+          ticks: {font: {size: 13, weight: 'bold'}},
+          grid: {display: false}
+        }
       }
     }
-  }
-});
+  });
+})();
 
 // ── Chart 4: 交易额 vs 违法所得（双柱状图）──
 new Chart(document.getElementById('c4'), {
