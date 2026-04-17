@@ -148,7 +148,7 @@ footer a{color:#1565C0}
               <th>维度</th>
               <th>拼多多</th>
               <th class="meituan-head">美团 ⭐</th>
-              <th>饿了么</th>
+              <th>饿了么/淘宝闪购</th>
               <th>京东</th>
               <th>抖音</th>
               <th>淘宝</th>
@@ -323,7 +323,7 @@ Chart.register(ChartDataLabels);
 new Chart(document.getElementById('c1'), {
   type: 'bar',
   data: {
-    labels: ['拼多多','美团','京东','饿了么','抖音','淘宝','天猫'],
+    labels: ['拼多多','美团','京东','饿了么/淘宝闪购','抖音','淘宝','天猫'],
     datasets: [{
       label: '罚款金额（亿元）',
       data: [15.14, 6.93, 6.26, 5.33, 0.45, 0.44, 0.26],
@@ -366,7 +366,7 @@ new Chart(document.getElementById('c1'), {
 new Chart(document.getElementById('c2'), {
   type: 'bar',
   data: {
-    labels: ['拼多多','美团','天猫','饿了么','淘宝','抖音','京东'],
+    labels: ['拼多多','美团','天猫','饿了么/淘宝闪购','淘宝','抖音','京东'],
     datasets: [
       {
         label: '法定代表人（万元）',
@@ -413,7 +413,7 @@ new Chart(document.getElementById('c2'), {
 new Chart(document.getElementById('c3'), {
   type: 'bar',
   data: {
-    labels: ['京东','拼多多','饿了么','美团','淘宝','抖音','天猫'],
+    labels: ['京东','拼多多','饿了么/淘宝闪购','美团','淘宝','抖音','天猫'],
     datasets: [
       {
         label: '有交易店铺',
@@ -465,7 +465,7 @@ new Chart(document.getElementById('c3'), {
 new Chart(document.getElementById('c4'), {
   type: 'bar',
   data: {
-    labels: ['美团','抖音','饿了么','拼多多','京东','天猫','淘宝'],
+    labels: ['美团','抖音','饿了么/淘宝闪购','拼多多','京东','天猫','淘宝'],
     datasets: [
       {
         label: '问题店铺交易额（万元）',
@@ -509,7 +509,7 @@ new Chart(document.getElementById('c4'), {
 
 // ── Chart 5: 单店处罚标准（双轴图）──
 (function(){
-  const labels = ['拼多多','美团','饿了么','抖音','天猫','淘宝','京东'];
+  const labels = ['拼多多','美团','饿了么/淘宝闪购','抖音','天猫','淘宝','京东'];
   const fines   = [16, 10, 10, 10, 10, 5, 5];
   const months  = [9, 6, 6, 6, 6, 3, 3];
   const fineColors = labels.map(l =>
