@@ -109,7 +109,7 @@ footer a{color:#1565C0}
   <section class="section" id="s2">
     <h2 class="section-title">二、个人处罚金额<span>单位：万元 | 法定代表人 vs 食安负责人</span></h2>
     <div class="card">
-      <div class="chart-wrap" style="height:340px"><canvas id="c2"></canvas></div>
+      <div class="chart-wrap" style="height:420px"><canvas id="c2"></canvas></div>
     </div>
   </section>
 
@@ -362,52 +362,96 @@ new Chart(document.getElementById('c1'), {
   }
 });
 
-// ── Chart 2: 个人处罚（分组柱状图）──
-new Chart(document.getElementById('c2'), {
-  type: 'bar',
-  data: {
-    labels: ['拼多多','美团','天猫','饿了么/淘宝闪购','淘宝','抖音','京东'],
-    datasets: [
-      {
-        label: '法定代表人（万元）',
-        data: [693.73, 252.77, 143.46, 122, 51.01, 33.70, 16.87],
-        backgroundColor: '#D32F2F',
-        borderRadius: 4
-      },
-      {
-        label: '食安负责人（万元）',
-        data: [265.84, 87.25, 76.76, 98.53, 27.65, 64.66, 34.5],
-        backgroundColor: '#FFC107',
-        borderRadius: 4
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {position: 'top'},
-      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.y + ' 万元'}},
-      datalabels: {
-        anchor: 'end',
-        align: 'end',
-        formatter: v => v,
-        font: {size: 10},
-        color: '#424242',
-        rotation: -45
-      }
+// ── Chart 2: 个人处罚（横向分组柱状图，含姓名职务）──
+(function(){
+  // Y轴标签：平台名
+  const labels = ['拼多多','美团','天猫','饿了么/淘宝闪购','淘宝','抖音','京东'];
+  // 法定代表人：姓名、职务、金额
+  const legal = [
+    {name:'赵佳臻', title:'法定代表人', val:693.73},
+    {name:'钟永健', title:'法定代表人', val:252.77},
+    {name:'刘博',   title:'法定代表人', val:143.46},
+    {name:'方永新', title:'法定代表人', val:122},
+    {name:'谌伟业', title:'法定代表人', val:51.01},
+    {name:'王迪',   title:'法定代表人', val:33.70},
+    {name:'张奇',   title:'法定代表人', val:16.87},
+  ];
+  // 食安负责人：姓名、职务、金额
+  const safety = [
+    {name:'范洁真', title:'食安委员会主任', val:265.84},
+    {name:'王紫薇', title:'食品安全总监',   val:87.25},
+    {name:'黄海波', title:'食安管理负责人', val:76.76},
+    {name:'田西艳', title:'食品安全总监',   val:98.53},
+    {name:'黄海波', title:'食安管理负责人', val:27.65},
+    {name:'廖天博', title:'食品安全总监',   val:64.66},
+    {name:'倪文祺+薛剑', title:'食品安全总监（两任）', val:34.5},
+  ];
+
+  new Chart(document.getElementById('c2'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '法定代表人（万元）',
+          data: legal.map(d => d.val),
+          backgroundColor: '#D32F2F',
+          borderRadius: 4,
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            formatter: (v, ctx) => legal[ctx.dataIndex].name + '\n' + v + '万',
+            font: {size: 10, weight: 'bold'},
+            color: '#B71C1C'
+          }
+        },
+        {
+          label: '食安负责人（万元）',
+          data: safety.map(d => d.val),
+          backgroundColor: '#FFC107',
+          borderRadius: 4,
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            formatter: (v, ctx) => safety[ctx.dataIndex].name + '\n' + v + '万',
+            font: {size: 10, weight: 'bold'},
+            color: '#E65100'
+          }
+        }
+      ]
     },
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 800,
-        title: {display: true, text: '万元'},
-        grid: {color: '#F0F0F0'}
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {position: 'top'},
+        tooltip: {
+          callbacks: {
+            label: c => {
+              const arr = c.datasetIndex === 0 ? legal : safety;
+              const d = arr[c.dataIndex];
+              return ` ${d.name}（${d.title}）: ${d.val} 万元`;
+            }
+          }
+        },
+        datalabels: {}
       },
-      x: {grid: {display: false}}
+      scales: {
+        x: {
+          beginAtZero: true,
+          max: 820,
+          title: {display: true, text: '万元'},
+          grid: {color: '#F0F0F0'}
+        },
+        y: {
+          ticks: {font: {size: 13, weight: 'bold'}},
+          grid: {display: false}
+        }
+      }
     }
-  }
-});
+  });
+})();
 
 // ── Chart 3: 违规店铺数量（堆叠横向柱状图）──
 (function(){
