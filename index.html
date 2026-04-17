@@ -71,6 +71,7 @@ footer a{color:#1565C0}
     <a href="#s2">&#128100; 个人处罚</a>
     <a href="#s3">&#127978; 违规店铺</a>
     <a href="#s4">&#128176; 交易额&违法所得</a>
+    <a href="#s4b">&#128717; 单店交易规模</a>
     <a href="#s5">&#9878;&#65039; 单店标准</a>
     <a href="#s6">&#128203; 差异对比表</a>
     <a href="#s7">&#128216; 说明</a>
@@ -126,6 +127,14 @@ footer a{color:#1565C0}
     <h2 class="section-title">四、问题店铺交易额 vs 违法所得<span>单位：万元人民币</span></h2>
     <div class="card">
       <div class="chart-wrap" style="height:340px"><canvas id="c4"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Section 4b -->
+  <section class="section" id="s4b">
+    <h2 class="section-title">四（续）、违规店铺单店交易规模<span>交易额 ÷ 有交易违规店铺数，数据来源：处罚书原文</span></h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:320px"><canvas id="c4b"></canvas></div>
     </div>
   </section>
 
@@ -598,6 +607,88 @@ new Chart(document.getElementById('c4'), {
     }
   }
 });
+
+// ── Chart 4b: 违规店铺单店交易规模（横向柱状图）──
+(function(){
+  // 按单店均值从高到低排序
+  const data = [
+    {name:'抖音',           total:37888.69, shops:454,  avg:83.46},
+    {name:'天猫',           total:7678.14,  shops:256,  avg:29.99},
+    {name:'淘宝',           total:6396.66,  shops:881,  avg:7.26},
+    {name:'美团',           total:40498.70, shops:6918, avg:5.85},
+    {name:'京东',           total:7729.87,  shops:4858, avg:1.59},
+    {name:'饿了么/淘宝闪购', total:21232.19, shops:5223, avg:4.07},
+    {name:'拼多多',         total:9708.93,  shops:9463, avg:1.03},
+  ].sort((a,b) => b.avg - a.avg);
+
+  const labels = data.map(d => d.name);
+  const avgs   = data.map(d => d.avg);
+  const colors = labels.map(l =>
+    l === '美团'   ? '#FFC107' :
+    l === '抖音'   ? '#FF7043' :
+    l === '天猫'   ? '#E91E63' :
+    l === '淘宝'   ? '#AB47BC' :
+    l === '拼多多' ? '#D32F2F' :
+    l === '京东'   ? '#1565C0' : '#26A69A'
+  );
+
+  new Chart(document.getElementById('c4b'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: '单店平均交易额（万元/家）',
+        data: avgs,
+        backgroundColor: colors,
+        borderRadius: 4,
+        datalabels: {
+          anchor: 'end',
+          align: 'end',
+          formatter: (v, ctx) => {
+            const d = data[ctx.dataIndex];
+            return v.toFixed(2) + '万\n(' + d.shops.toLocaleString() + '家 · 合计' + d.total.toLocaleString() + '万)';
+          },
+          font: {size: 10, weight: 'bold'},
+          color: '#212121',
+          offset: 4
+        }
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {display: false},
+        tooltip: {
+          callbacks: {
+            label: c => {
+              const d = data[c.dataIndex];
+              return [
+                ` 单店均值：${d.avg.toFixed(2)} 万元/家`,
+                ` 有交易店铺：${d.shops.toLocaleString()} 家`,
+                ` 总交易额：${d.total.toLocaleString()} 万元`
+              ];
+            }
+          }
+        },
+        datalabels: {}
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          max: 105,
+          title: {display: true, text: '万元/家（单店平均交易额）'},
+          grid: {color: '#F0F0F0'}
+        },
+        y: {
+          ticks: {font: {size: 13, weight: 'bold'}},
+          grid: {display: false}
+        }
+      }
+    }
+  });
+})();
 
 // ── Chart 5: 单店处罚标准（双轴图）──
 (function(){
