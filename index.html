@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>国家市场监督管理总局食品安全行政处罚分析 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:#FAFAFA;color:#212121;line-height:1.6}
+.nav{position:sticky;top:0;z-index:100;background:#1565C0;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;overflow-x:auto;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-inner a{display:block;padding:13px 16px;color:#fff;text-decoration:none;font-size:13px;white-space:nowrap;transition:background .2s}
+.nav-inner a:hover{background:rgba(255,255,255,.15)}
+.page{max-width:1200px;margin:0 auto;padding:0 20px 60px}
+.header{background:linear-gradient(135deg,#1565C0 0%,#0D47A1 100%);color:#fff;padding:48px 20px 40px;text-align:center;margin-bottom:36px}
+.header h1{font-size:clamp(20px,4vw,32px);font-weight:700;letter-spacing:.04em;margin-bottom:12px}
+.header .subtitle{font-size:15px;color:#BBDEFB;margin-bottom:8px}
+.header .date{font-size:13px;color:#90CAF9}
+.badge-header{display:inline-block;background:#FFC107;color:#212121;font-weight:700;font-size:13px;border-radius:20px;padding:4px 14px;margin-top:14px}
+.section{margin-bottom:40px}
+.section-title{font-size:20px;font-weight:700;color:#212121;margin-bottom:20px;padding-left:16px;border-left:5px solid #FFC107;line-height:1.3}
+.section-title span{font-size:13px;font-weight:400;color:#757575;margin-left:8px}
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:28px 24px;margin-bottom:20px}
+.chart-wrap{position:relative}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
+th,td{padding:10px 12px;border:1px solid #E0E0E0;vertical-align:middle;text-align:center}
+thead th{background:#1565C0;color:#fff;font-weight:700;font-size:14px;white-space:nowrap}
+thead th:first-child{background:#0D47A1}
+thead th.meituan-head{background:#E6A817;color:#fff}
+tbody tr:nth-child(even) td{background:#F5F5F5}
+tbody tr:nth-child(even) td.meituan-col{background:#FFF3CD}
+td.meituan-col{background:#FFF8E1}
+tbody td:first-child{font-weight:700;background:#E3F2FD;text-align:left;white-space:nowrap;min-width:130px}
+tbody tr:nth-child(even) td:first-child{background:#DDEEFF}
+.badge{display:inline-block;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap}
+.badge-red{background:#FFEBEE;color:#C62828;border:1px solid #EF9A9A}
+.badge-green{background:#E8F5E9;color:#2E7D32;border:1px solid #A5D6A7}
+.badge-orange{background:#FFF3E0;color:#E65100;border:1px solid #FFCC80}
+.badge-yellow{background:#FFFDE7;color:#F57F17;border:1px solid #FFF176}
+.badge-blue{background:#E3F2FD;color:#1565C0;border:1px solid #90CAF9}
+.badge-gray{background:#F5F5F5;color:#616161;border:1px solid #BDBDBD}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.info-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.07);padding:20px;border-top:4px solid #1565C0}
+.info-card:nth-child(2){border-top-color:#FFC107}
+.info-card:nth-child(3){border-top-color:#F57C00}
+.info-card:nth-child(4){border-top-color:#388E3C}
+.info-card h4{font-size:15px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.info-card p{font-size:13px;color:#555;line-height:1.7}
+.stats-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.stat-box{flex:1 1 150px;background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08);padding:18px 16px;text-align:center}
+.stat-box .num{font-size:26px;font-weight:700;color:#1565C0}
+.stat-box .num.red{color:#D32F2F}
+.stat-box .num.yellow{color:#F57C00}
+.stat-box .label{font-size:11px;color:#757575;margin-top:4px;line-height:1.4}
+.legend-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:#757575}
+footer{text-align:center;font-size:12px;color:#9E9E9E;padding:24px 0 16px;border-top:1px solid #E0E0E0}
+footer a{color:#1565C0}
+@media(max-width:600px){.card{padding:16px 12px}.section-title{font-size:17px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#s1">&#128202; 企业处罚金额</a>
+    <a href="#s2">&#128100; 个人处罚</a>
+    <a href="#s3">&#127978; 违规店铺</a>
+    <a href="#s4">&#128176; 交易额&违法所得</a>
+    <a href="#s5">&#9878;&#65039; 单店标准</a>
+    <a href="#s6">&#128203; 差异对比表</a>
+    <a href="#s7">&#128216; 说明</a>
+  </div>
+</nav>
+
+<header class="header">
+  <div style="max-width:1200px;margin:0 auto">
+    <h1>&#127983; 国家市场监督管理总局<br>食品安全行政处罚分析</h1>
+    <div class="subtitle">国市监处罚〔2026〕3—24号 &nbsp;·&nbsp; 共22份处罚决定书 &nbsp;·&nbsp; 涉及7大平台</div>
+    <div class="date">发布日期：2026年4月17日</div>
+    <div class="badge-header">裱花蛋糕 · 预制菜 · 网络餐饮食品安全专项整治</div>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="num red">40.81</div><div class="label">企业处罚总额（亿元）</div></div>
+    <div class="stat-box"><div class="num">22</div><div class="label">处罚决定书份数</div></div>
+    <div class="stat-box"><div class="num yellow">7</div><div class="label">涉及平台数</div></div>
+    <div class="stat-box"><div class="num">67,604</div><div class="label">违规店铺总计（家）</div></div>
+    <div class="stat-box"><div class="num red">15.14</div><div class="label">最高单平台罚款（亿元）<br>拼多多</div></div>
+    <div class="stat-box"><div class="num yellow">1,452</div><div class="label">美团转单违法所得没收（万元）</div></div>
+  </div>
+
+  <!-- Section 1 -->
+  <section class="section" id="s1">
+    <h2 class="section-title">一、企业处罚金额<span>单位：亿元人民币 | 排序由高到低</span></h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:300px"><canvas id="c1"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Section 2 -->
+  <section class="section" id="s2">
+    <h2 class="section-title">二、个人处罚金额<span>单位：万元 | 法定代表人 vs 食安负责人</span></h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:340px"><canvas id="c2"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+  <section class="section" id="s3">
+    <h2 class="section-title">三、违规店铺数量<span>堆叠图：有交易店铺 + 无交易店铺</span></h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:340px"><canvas id="c3"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Section 4 -->
+  <section class="section" id="s4">
+    <h2 class="section-title">四、问题店铺交易额 vs 违法所得<span>单位：万元人民币</span></h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:340px"><canvas id="c4"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Section 5 -->
+  <section class="section" id="s5">
+    <h2 class="section-title">五、单店处罚标准<span>有交易店铺罚款（万元/家）及暂停新增月数</span></h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:320px"><canvas id="c5"></canvas></div>
+    </div>
+  </section>
+
+  <!-- Section 6 -->
+  <section class="section" id="s6">
+    <h2 class="section-title">六、各平台处罚书关键差异对比<span>⭐ 重点参考</span></h2>
+    <div class="card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>拼多多</th>
+              <th class="meituan-head">美团 ⭐</th>
+              <th>饿了么</th>
+              <th>京东</th>
+              <th>抖音</th>
+              <th>淘宝</th>
+              <th>天猫</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>违规品类</td>
+              <td>裱花蛋糕</td>
+              <td class="meituan-col"><span class="badge badge-orange">全品类</span></td>
+              <td><span class="badge badge-orange">全品类</span></td>
+              <td>裱花蛋糕</td>
+              <td>裱花蛋糕</td>
+              <td>裱花蛋糕</td>
+              <td>裱花蛋糕</td>
+            </tr>
+            <tr>
+              <td>2024年被罚前科</td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td class="meituan-col"><span class="badge badge-red">有（从重）</span></td>
+              <td><span class="badge badge-red">有（从重）</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+            </tr>
+            <tr>
+              <td>阻碍执法</td>
+              <td><span class="badge badge-red">有（拒材料/软对抗/暴力）</span></td>
+              <td class="meituan-col"><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+              <td><span class="badge badge-gray">无</span></td>
+            </tr>
+            <tr>
+              <td>转单违法所得单独没收</td>
+              <td>否（0.87万）</td>
+              <td class="meituan-col"><span class="badge badge-red">是（1452.91万）</span></td>
+              <td><span class="badge badge-orange">是（354.18万）</span></td>
+              <td>否（并入）</td>
+              <td>否（并入）</td>
+              <td><span class="badge badge-yellow">是（7.71万）</span></td>
+              <td><span class="badge badge-yellow">是（144.96万）</span></td>
+            </tr>
+            <tr>
+              <td>转单平台</td>
+              <td><span class="badge badge-yellow">百分网络/梦晟花卉</span></td>
+              <td class="meituan-col"><span class="badge badge-blue">转单宝/梦馨</span></td>
+              <td><span class="badge badge-blue">转单宝/梦馨</span></td>
+              <td>仅转单宝</td>
+              <td><span class="badge badge-blue">转单宝/梦馨</span></td>
+              <td><span class="badge badge-blue">转单宝/梦馨</span></td>
+              <td><span class="badge badge-blue">转单宝/梦馨</span></td>
+            </tr>
+            <tr>
+              <td>无交易店铺处理</td>
+              <td><span class="badge badge-gray">无此情形</span></td>
+              <td class="meituan-col"><span class="badge badge-green">减轻 1万/家</span></td>
+              <td><span class="badge badge-green">减轻 1万/家</span></td>
+              <td><span class="badge badge-green">减轻 1万/家</span></td>
+              <td><span class="badge badge-gray">无此情形</span></td>
+              <td><span class="badge badge-gray">无此情形</span></td>
+              <td><span class="badge badge-gray">无此情形</span></td>
+            </tr>
+            <tr>
+              <td>有交易店铺罚款</td>
+              <td><span class="badge badge-red">16万/家 ▲最高</span></td>
+              <td class="meituan-col">10万/家</td>
+              <td>10万/家</td>
+              <td><span class="badge badge-green">5万/家 ▼最低</span></td>
+              <td>10万/家</td>
+              <td><span class="badge badge-green">5万/家 ▼最低</span></td>
+              <td>10万/家</td>
+            </tr>
+            <tr>
+              <td>违法情节认定</td>
+              <td><span class="badge badge-red">严重+阻碍执法</span></td>
+              <td class="meituan-col"><span class="badge badge-orange">严重+前科从重</span></td>
+              <td><span class="badge badge-orange">严重+前科从重</span></td>
+              <td><span class="badge badge-green">部分轻微减轻</span></td>
+              <td>情节严重</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+            <tr>
+              <td>食安负责人职位</td>
+              <td>食安委员会主任</td>
+              <td class="meituan-col">食安总监</td>
+              <td>食安总监</td>
+              <td><span class="badge badge-blue">食安总监（两任）</span></td>
+              <td>食安总监</td>
+              <td>食安管理负责人</td>
+              <td>食安管理负责人</td>
+            </tr>
+            <tr>
+              <td>立案时间</td>
+              <td><span class="badge badge-yellow">2025.12.08</span></td>
+              <td class="meituan-col">2025.11.20</td>
+              <td>2025.11.20</td>
+              <td>2025.11.20</td>
+              <td>2025.11.20</td>
+              <td><span class="badge badge-yellow">2025.12.16</span></td>
+              <td><span class="badge badge-yellow">2025.12.16</span></td>
+            </tr>
+            <tr>
+              <td>暂停新增月数</td>
+              <td><span class="badge badge-red">9个月 ▲最长</span></td>
+              <td class="meituan-col">6个月</td>
+              <td>6个月</td>
+              <td><span class="badge badge-green">3个月 ▼最短</span></td>
+              <td>6个月</td>
+              <td><span class="badge badge-green">3个月 ▼最短</span></td>
+              <td>6个月</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend-row">
+        <span><span class="badge badge-red">红色</span> 从重/加重情形</span>
+        <span><span class="badge badge-orange">橙色</span> 独特差异情形</span>
+        <span><span class="badge badge-green">绿色</span> 减轻情形</span>
+        <span><span class="badge badge-yellow">黄色</span> 关注情形</span>
+        <span><span class="badge badge-blue">蓝色</span> 一般信息</span>
+        <span style="background:#FFF8E1;padding:2px 8px;border-radius:4px;border:1px solid #FFE082">⭐ 美团列高亮</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7 -->
+  <section class="section" id="s7">
+    <h2 class="section-title">七、背景说明</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4><span>⚖️</span>双罚制</h4>
+        <p>依据《食品安全法》第131条及实施条例第75条，平台企业与直接负责的主管人员同步受罚。个人罚款以<strong>上年度收入1—10倍</strong>计算，同时处以<strong>5年内禁止从业</strong>资格处罚。</p>
+      </div>
+      <div class="info-card">
+        <h4><span>🧮</span>计算逻辑</h4>
+        <p>每家入网经营者的资质审查失职为<strong>独立违法行为</strong>，逐店计算。无实际交易记录的店铺适用<strong>减轻处罚（1万元/家）</strong>，有交易记录的店铺从重处罚（5—16万元/家）。</p>
+      </div>
+      <div class="info-card">
+        <h4><span>🔄</span>转单行为</h4>
+        <p>平台授权第三方API服务商帮助商家"一键转单"，将订单在不同平台间流转，违反《网络餐饮服务食品安全监督管理办法》<strong>第18条第4项</strong>，转单违法所得予以单独没收。</p>
+      </div>
+      <div class="info-card">
+        <h4><span>⏸️</span>暂停新增</h4>
+        <p>各平台被处以暂停新增<strong>裱花蛋糕（预包装除外）</strong>品类店铺的行政处罚，暂停期限为<strong>3至9个月不等</strong>，视违法情节严重程度确定。拼多多因阻碍执法被处最长9个月。</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div style="max-width:1200px;margin:0 auto;padding:0 20px">
+    数据来源：<a href="https://www.samr.gov.cn/xw/zj/art/2026/art_9714ee2bef9244819134ef4ffdd14017.html" target="_blank">国家市场监督管理总局官网</a>
+    &nbsp;|&nbsp; 制作日期：2026年4月17日
+    &nbsp;|&nbsp; 仅供内部研究参考，数据以官方原文为准
+  </div>
+</footer>
+
+<script>
+Chart.defaults.font.family = "'Noto Sans SC','PingFang SC',sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#424242';
+
+// ── Chart 1: 企业处罚金额（横向柱状图）──
+new Chart(document.getElementById('c1'), {
+  type: 'bar',
+  data: {
+    labels: ['拼多多','美团','京东','饿了么','抖音','淘宝','天猫'],
+    datasets: [{
+      label: '罚款金额（亿元）',
+      data: [15.14, 6.93, 6.26, 5.33, 0.45, 0.44, 0.26],
+      backgroundColor: ['#D32F2F','#FFC107','#90CAF9','#90CAF9','#90CAF9','#90CAF9','#90CAF9'],
+      borderRadius: 6,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {display: false},
+      tooltip: {callbacks: {label: c => ' ' + c.parsed.x + ' 亿元'}}
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        title: {display: true, text: '亿元'},
+        grid: {color: '#F0F0F0'}
+      },
+      y: {
+        ticks: {font: {size: 13, weight: 'bold'}},
+        grid: {display: false}
+      }
+    }
+  }
+});
+
+// ── Chart 2: 个人处罚（分组柱状图）──
+new Chart(document.getElementById('c2'), {
+  type: 'bar',
+  data: {
+    labels: ['拼多多','美团','天猫','饿了么','淘宝','抖音','京东'],
+    datasets: [
+      {
+        label: '法定代表人（万元）',
+        data: [693.73, 252.77, 143.46, 122, 51.01, 33.70, 16.87],
+        backgroundColor: '#D32F2F',
+        borderRadius: 4
+      },
+      {
+        label: '食安负责人（万元）',
+        data: [265.84, 87.25, 76.76, 98.53, 27.65, 64.66, 34.5],
+        backgroundColor: '#FFC107',
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {position: 'top'},
+      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.y + ' 万元'}}
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {display: true, text: '万元'},
+        grid: {color: '#F0F0F0'}
+      },
+      x: {grid: {display: false}}
+    }
+  }
+});
+
+// ── Chart 3: 违规店铺数量（堆叠横向柱状图）──
+new Chart(document.getElementById('c3'), {
+  type: 'bar',
+  data: {
+    labels: ['京东','拼多多','饿了么','美团','淘宝','抖音','天猫'],
+    datasets: [
+      {
+        label: '有交易店铺',
+        data: [4858, 9463, 5223, 6918, 881, 454, 256],
+        backgroundColor: '#D32F2F',
+        borderRadius: 0
+      },
+      {
+        label: '无交易店铺',
+        data: [38332, 0, 1106, 113, 0, 0, 0],
+        backgroundColor: '#90CAF9',
+        borderRadius: 0
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {position: 'top'},
+      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.x.toLocaleString() + ' 家'}}
+    },
+    scales: {
+      x: {
+        stacked: true,
+        beginAtZero: true,
+        title: {display: true, text: '家'},
+        grid: {color: '#F0F0F0'}
+      },
+      y: {
+        stacked: true,
+        ticks: {font: {size: 13, weight: 'bold'}},
+        grid: {display: false}
+      }
+    }
+  }
+});
+
+// ── Chart 4: 交易额 vs 违法所得（双柱状图）──
+new Chart(document.getElementById('c4'), {
+  type: 'bar',
+  data: {
+    labels: ['美团','抖音','饿了么','拼多多','京东','天猫','淘宝'],
+    datasets: [
+      {
+        label: '问题店铺交易额（万元）',
+        data: [40498, 37889, 21232, 9709, 7730, 7678, 6397],
+        backgroundColor: '#1565C0',
+        borderRadius: 4
+      },
+      {
+        label: '违法所得（万元）',
+        data: [5079, 949, 2309, 585, 670, 414, 93],
+        backgroundColor: '#F57C00',
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {position: 'top'},
+      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString() + ' 万元'}}
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {display: true, text: '万元'},
+        grid: {color: '#F0F0F0'}
+      },
+      x: {grid: {display: false}}
+    }
+  }
+});
+
+// ── Chart 5: 单店处罚标准（双轴图）──
+(function(){
+  const labels = ['拼多多','美团','饿了么','抖音','天猫','淘宝','京东'];
+  const fines   = [16, 10, 10, 10, 10, 5, 5];
+  const months  = [9, 6, 6, 6, 6, 3, 3];
+  const fineColors = labels.map(l =>
+    l === '拼多多' ? '#D32F2F' :
+    l === '美团'   ? '#FFC107' : '#90CAF9'
+  );
+
+  new Chart(document.getElementById('c5'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: '有交易店铺罚款（万元/家）',
+          data: fines,
+          backgroundColor: fineColors,
+          borderRadius: 4,
+          yAxisID: 'y1'
+        },
+        {
+          type: 'line',
+          label: '暂停新增月数（月）',
+          data: months,
+          borderColor: '#388E3C',
+          backgroundColor: 'rgba(56,142,60,.15)',
+          pointBackgroundColor: '#388E3C',
+          pointRadius: 6,
+          tension: 0.3,
+          yAxisID: 'y2'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {position: 'top'},
+        tooltip: {}
+      },
+      scales: {
+        y1: {
+          type: 'linear',
+          position: 'left',
+          beginAtZero: true,
+          title: {display: true, text: '罚款（万元/家）'},
+          grid: {color: '#F0F0F0'}
+        },
+        y2: {
+          type: 'linear',
+          position: 'right',
+          beginAtZero: true,
+          max: 12,
+          title: {display: true, text: '暂停月数（月）'},
+          grid: {drawOnChartArea: false}
+        },
+        x: {grid: {display: false}}
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
