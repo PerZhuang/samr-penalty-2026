@@ -471,7 +471,7 @@ new Chart(document.getElementById('c1'), {
           backgroundColor: '#D32F2F',
           borderRadius: 0,
           datalabels: {
-            display: ctx => hasTrade[ctx.dataIndex] > 300,
+            display: ctx => hasTrade[ctx.dataIndex] > 2000,
             anchor: 'center',
             align: 'center',
             formatter: v => v.toLocaleString(),
