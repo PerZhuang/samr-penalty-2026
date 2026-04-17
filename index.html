@@ -6,6 +6,7 @@
 <title>国家市场监督管理总局食品安全行政处罚分析 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background:#FAFAFA;color:#212121;line-height:1.6}
@@ -316,6 +317,7 @@ footer a{color:#1565C0}
 Chart.defaults.font.family = "'Noto Sans SC','PingFang SC',sans-serif";
 Chart.defaults.font.size = 12;
 Chart.defaults.color = '#424242';
+Chart.register(ChartDataLabels);
 
 // ── Chart 1: 企业处罚金额（横向柱状图）──
 new Chart(document.getElementById('c1'), {
@@ -336,11 +338,19 @@ new Chart(document.getElementById('c1'), {
     maintainAspectRatio: false,
     plugins: {
       legend: {display: false},
-      tooltip: {callbacks: {label: c => ' ' + c.parsed.x + ' 亿元'}}
+      tooltip: {callbacks: {label: c => ' ' + c.parsed.x + ' 亿元'}},
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        formatter: v => v + ' 亿',
+        font: {weight: 'bold', size: 12},
+        color: '#212121'
+      }
     },
     scales: {
       x: {
         beginAtZero: true,
+        max: 18,
         title: {display: true, text: '亿元'},
         grid: {color: '#F0F0F0'}
       },
@@ -377,11 +387,20 @@ new Chart(document.getElementById('c2'), {
     maintainAspectRatio: false,
     plugins: {
       legend: {position: 'top'},
-      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.y + ' 万元'}}
+      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.y + ' 万元'}},
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        formatter: v => v,
+        font: {size: 10},
+        color: '#424242',
+        rotation: -45
+      }
     },
     scales: {
       y: {
         beginAtZero: true,
+        max: 800,
         title: {display: true, text: '万元'},
         grid: {color: '#F0F0F0'}
       },
@@ -416,7 +435,15 @@ new Chart(document.getElementById('c3'), {
     maintainAspectRatio: false,
     plugins: {
       legend: {position: 'top'},
-      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.x.toLocaleString() + ' 家'}}
+      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.x.toLocaleString() + ' 家'}},
+      datalabels: {
+        display: ctx => ctx.dataset.data[ctx.dataIndex] > 0,
+        anchor: 'center',
+        align: 'center',
+        formatter: v => v.toLocaleString(),
+        font: {size: 11, weight: 'bold'},
+        color: '#fff'
+      }
     },
     scales: {
       x: {
@@ -459,7 +486,15 @@ new Chart(document.getElementById('c4'), {
     maintainAspectRatio: false,
     plugins: {
       legend: {position: 'top'},
-      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString() + ' 万元'}}
+      tooltip: {callbacks: {label: c => ' ' + c.dataset.label + ': ' + c.parsed.y.toLocaleString() + ' 万元'}},
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        formatter: v => v >= 1000 ? (v/10000).toFixed(1)+'亿' : v.toLocaleString(),
+        font: {size: 10},
+        color: '#424242',
+        rotation: -45
+      }
     },
     scales: {
       y: {
@@ -492,7 +527,14 @@ new Chart(document.getElementById('c4'), {
           data: fines,
           backgroundColor: fineColors,
           borderRadius: 4,
-          yAxisID: 'y1'
+          yAxisID: 'y1',
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            formatter: v => v + '万',
+            font: {weight: 'bold', size: 12},
+            color: '#212121'
+          }
         },
         {
           type: 'line',
@@ -503,7 +545,14 @@ new Chart(document.getElementById('c4'), {
           pointBackgroundColor: '#388E3C',
           pointRadius: 6,
           tension: 0.3,
-          yAxisID: 'y2'
+          yAxisID: 'y2',
+          datalabels: {
+            anchor: 'top',
+            align: 'top',
+            formatter: v => v + '月',
+            font: {size: 11, weight: 'bold'},
+            color: '#388E3C'
+          }
         }
       ]
     },
@@ -512,13 +561,15 @@ new Chart(document.getElementById('c4'), {
       maintainAspectRatio: false,
       plugins: {
         legend: {position: 'top'},
-        tooltip: {}
+        tooltip: {},
+        datalabels: {}
       },
       scales: {
         y1: {
           type: 'linear',
           position: 'left',
           beginAtZero: true,
+          max: 20,
           title: {display: true, text: '罚款（万元/家）'},
           grid: {color: '#F0F0F0'}
         },
